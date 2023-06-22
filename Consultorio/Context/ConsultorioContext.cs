@@ -9,7 +9,15 @@ namespace Consultorio.Context
 
         DbSet<Agendamento> Agendamentos { get; set; }
 
-        // FluenteAPI  Modelbuider.ApplyConfiguration<Cliente>(new ClienteConfiguration());
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        }
+       
     }
 
 

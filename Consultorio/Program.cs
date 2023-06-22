@@ -1,12 +1,14 @@
 using Consultorio.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ConsultorioContext>(
-        options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConsultorioDbContext"))
-    ); ;
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConsultorioDbContext"),
+        assembly => assembly.MigrationsAssembly(typeof(ConsultorioContext).Assembly.FullName)));
+    
 
 
 builder.Services.AddControllers();
