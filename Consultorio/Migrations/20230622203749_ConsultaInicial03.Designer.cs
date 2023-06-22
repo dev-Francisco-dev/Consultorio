@@ -4,6 +4,7 @@ using Consultorio.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Consultorio.Migrations
 {
     [DbContext(typeof(ConsultorioContext))]
-    partial class ConsultorioContextModelSnapshot : ModelSnapshot
+    [Migration("20230622203749_ConsultaInicial03")]
+    partial class ConsultaInicial03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,9 +38,8 @@ namespace Consultorio.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("data_horario");
 
-                    b.Property<int>("EspecialidadeId")
-                        .HasColumnType("int")
-                        .HasColumnName("especialidadeId");
+                    b.Property<int?>("EspecialidadeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PacienteId")
                         .HasColumnType("int")
@@ -147,30 +149,11 @@ namespace Consultorio.Migrations
                     b.ToTable("tb_profissional", (string)null);
                 });
 
-            modelBuilder.Entity("Consultorio.Models.Entities.ProfissionalEspecialidade", b =>
-                {
-                    b.Property<int>("ProfissionalId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_profissional");
-
-                    b.Property<int>("EspecialidadeId")
-                        .HasColumnType("int")
-                        .HasColumnName("id_especialidade");
-
-                    b.HasKey("ProfissionalId", "EspecialidadeId");
-
-                    b.HasIndex("EspecialidadeId");
-
-                    b.ToTable("tb_profissional_especialidade", (string)null);
-                });
-
             modelBuilder.Entity("Consultorio.Models.Entities.Consulta", b =>
                 {
-                    b.HasOne("Consultorio.Models.Entities.Especialidade", "Especialidade")
+                    b.HasOne("Consultorio.Models.Entities.Especialidade", null)
                         .WithMany("Consultas")
-                        .HasForeignKey("EspecialidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EspecialidadeId");
 
                     b.HasOne("Consultorio.Models.Entities.Paciente", "Paciente")
                         .WithMany("Consultas")
@@ -184,28 +167,7 @@ namespace Consultorio.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Especialidade");
-
                     b.Navigation("Paciente");
-
-                    b.Navigation("Profissional");
-                });
-
-            modelBuilder.Entity("Consultorio.Models.Entities.ProfissionalEspecialidade", b =>
-                {
-                    b.HasOne("Consultorio.Models.Entities.Especialidade", "Especialidade")
-                        .WithMany()
-                        .HasForeignKey("EspecialidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Consultorio.Models.Entities.Profissional", "Profissional")
-                        .WithMany()
-                        .HasForeignKey("ProfissionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Especialidade");
 
                     b.Navigation("Profissional");
                 });

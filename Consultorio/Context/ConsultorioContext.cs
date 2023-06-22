@@ -7,7 +7,11 @@ namespace Consultorio.Context
     {
         public ConsultorioContext(DbContextOptions<ConsultorioContext> options) : base(options) { }
 
-        DbSet<Agendamento> Agendamentos { get; set; }
+        DbSet<Consulta> _Consultas { get; set; }
+        DbSet<Especialidade> Especialidades { get; set; }
+        DbSet<Paciente> Pacientes { get; set; }
+        DbSet<Profissional> Profissionais { get; set; }
+        DbSet<ProfissionalEspecialidade> profissionalEspecialidades { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

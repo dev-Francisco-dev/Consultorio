@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Consultorio.Migrations
 {
     [DbContext(typeof(ConsultorioContext))]
-    [Migration("20230622172516_Banco_Inicial")]
-    partial class Banco_Inicial
+    [Migration("20230622202704_ConsultaInicial02")]
+    partial class ConsultaInicial02
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,25 +24,6 @@ namespace Consultorio.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Consultorio.Models.Entities.Agendamento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Horario")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NomePaciente")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Agendamentos");
-                });
 
             modelBuilder.Entity("Consultorio.Models.Entities.Consulta", b =>
                 {
@@ -57,33 +38,22 @@ namespace Consultorio.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("data_horario");
 
-                    b.Property<int>("EspecialidadeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PacienteId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("pacienteId");
 
                     b.Property<decimal>("Preco")
                         .HasPrecision(7, 2)
                         .HasColumnType("decimal(7,2)")
                         .HasColumnName("preco");
 
-                    b.Property<int>("ProfissionalId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(1)
                         .HasColumnName("status");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EspecialidadeId");
-
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("ProfissionalId");
 
                     b.ToTable("tb_Consulta", (string)null);
                 });
@@ -92,139 +62,94 @@ namespace Consultorio.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativa")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("ativa");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Especialidade");
+                    b.ToTable("tb_especialidade", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.Models.Entities.Paciente", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("celular");
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(11)")
+                        .HasColumnName("cpf");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("email");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Paciente");
+                    b.ToTable("tb_paciente", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.Models.Entities.Profissional", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("ativo");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("nome");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profissional");
-                });
-
-            modelBuilder.Entity("EspecialidadeProfissional", b =>
-                {
-                    b.Property<int>("EspecialidadesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfissionaisId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EspecialidadesId", "ProfissionaisId");
-
-                    b.HasIndex("ProfissionaisId");
-
-                    b.ToTable("EspecialidadeProfissional");
+                    b.ToTable("tb_profissional", (string)null);
                 });
 
             modelBuilder.Entity("Consultorio.Models.Entities.Consulta", b =>
                 {
-                    b.HasOne("Consultorio.Models.Entities.Especialidade", "Especialidade")
-                        .WithMany("Consultas")
-                        .HasForeignKey("EspecialidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Consultorio.Models.Entities.Paciente", "Paciente")
                         .WithMany("Consultas")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Consultorio.Models.Entities.Profissional", "Profissional")
-                        .WithMany("Consultas")
-                        .HasForeignKey("ProfissionalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Especialidade");
-
                     b.Navigation("Paciente");
-
-                    b.Navigation("Profissional");
-                });
-
-            modelBuilder.Entity("EspecialidadeProfissional", b =>
-                {
-                    b.HasOne("Consultorio.Models.Entities.Especialidade", null)
-                        .WithMany()
-                        .HasForeignKey("EspecialidadesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Consultorio.Models.Entities.Profissional", null)
-                        .WithMany()
-                        .HasForeignKey("ProfissionaisId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Consultorio.Models.Entities.Especialidade", b =>
-                {
-                    b.Navigation("Consultas");
                 });
 
             modelBuilder.Entity("Consultorio.Models.Entities.Paciente", b =>
-                {
-                    b.Navigation("Consultas");
-                });
-
-            modelBuilder.Entity("Consultorio.Models.Entities.Profissional", b =>
                 {
                     b.Navigation("Consultas");
                 });
