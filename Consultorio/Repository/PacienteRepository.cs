@@ -1,6 +1,7 @@
 ﻿using Consultorio.Context;
 using Consultorio.Models.Entities;
 using Consultorio.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Consultorio.Repository
 {
@@ -11,15 +12,21 @@ namespace Consultorio.Repository
         {
             _db = db;
         }
-        public IEnumerable<Paciente> Get()
+        public async Task<IEnumerable<Paciente>> GetAsync()
         { 
-            var paciente = _db.Pacientes.ToList().OrderBy(x => x.Id);
-            return paciente;
+            var paciente = await _db.Pacientes
+                            .Include(x => x.Consultas)
+                            .ToListAsync();
+            return  paciente;
         }
 
-        public Paciente GetById(int id)
+        public async Task<Paciente> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var paciente = await _db.Pacientes
+                .Include(x => x.Consultas)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            return paciente; 
         }
     }
 }

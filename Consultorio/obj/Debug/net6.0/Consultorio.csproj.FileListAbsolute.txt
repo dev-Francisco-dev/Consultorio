@@ -85,3 +85,4 @@ C:\Dev\Projetos\Consultorio\Consultorio\obj\Debug\net6.0\refint\Consultorio.dll
 C:\Dev\Projetos\Consultorio\Consultorio\obj\Debug\net6.0\Consultorio.pdb
 C:\Dev\Projetos\Consultorio\Consultorio\obj\Debug\net6.0\Consultorio.genruntimeconfig.cache
 C:\Dev\Projetos\Consultorio\Consultorio\obj\Debug\net6.0\ref\Consultorio.dll
+C:\Dev\Projetos\Consultorio\Consultorio\bin\Debug\net6.0\Newtonsoft.Json.dll

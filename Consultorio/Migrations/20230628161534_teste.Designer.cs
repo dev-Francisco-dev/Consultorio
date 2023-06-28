@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Consultorio.Migrations
 {
     [DbContext(typeof(ConsultorioContext))]
-    [Migration("20230622210506_ConsultaInicial05")]
-    partial class ConsultaInicial05
+    [Migration("20230628161534_teste")]
+    partial class teste
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

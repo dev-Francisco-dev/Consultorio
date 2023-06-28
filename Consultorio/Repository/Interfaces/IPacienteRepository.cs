@@ -4,7 +4,7 @@ namespace Consultorio.Repository.Interfaces
 {
     public interface IPacienteRepository : IBaseRepository
     {
-        IEnumerable<Paciente> Get();
-        Paciente GetById(int id);
+        Task<IEnumerable<Paciente>> GetAsync();
+        Task<Paciente> GetByIdAsync(int id);
     }
 }

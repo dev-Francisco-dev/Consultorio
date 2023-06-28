@@ -12,10 +12,12 @@ builder.Services.AddScoped<IBaseRepository, BaseRepository>();
 builder.Services.AddDbContext<ConsultorioContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConsultorioDbContext"),
         assembly => assembly.MigrationsAssembly(typeof(ConsultorioContext).Assembly.FullName)));
+
+
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{ options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;});
     
-
-
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

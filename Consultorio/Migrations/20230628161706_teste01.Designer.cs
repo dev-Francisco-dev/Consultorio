@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Consultorio.Migrations
 {
     [DbContext(typeof(ConsultorioContext))]
-    [Migration("20230622202704_ConsultaInicial02")]
-    partial class ConsultaInicial02
+    [Migration("20230628161706_teste01")]
+    partial class teste01
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,10 @@ namespace Consultorio.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("data_horario");
 
+                    b.Property<int>("EspecialidadeId")
+                        .HasColumnType("int")
+                        .HasColumnName("especialidadeId");
+
                     b.Property<int>("PacienteId")
                         .HasColumnType("int")
                         .HasColumnName("pacienteId");
@@ -47,13 +51,21 @@ namespace Consultorio.Migrations
                         .HasColumnType("decimal(7,2)")
                         .HasColumnName("preco");
 
+                    b.Property<int>("ProfissionalId")
+                        .HasColumnType("int")
+                        .HasColumnName("profissionalId");
+
                     b.Property<int>("Status")
                         .HasColumnType("int")
                         .HasColumnName("status");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EspecialidadeId");
+
                     b.HasIndex("PacienteId");
+
+                    b.HasIndex("ProfissionalId");
 
                     b.ToTable("tb_Consulta", (string)null);
                 });
@@ -138,18 +150,80 @@ namespace Consultorio.Migrations
                     b.ToTable("tb_profissional", (string)null);
                 });
 
+            modelBuilder.Entity("Consultorio.Models.Entities.ProfissionalEspecialidade", b =>
+                {
+                    b.Property<int>("ProfissionalId")
+                        .HasColumnType("int")
+                        .HasColumnName("id_profissional");
+
+                    b.Property<int>("EspecialidadeId")
+                        .HasColumnType("int")
+                        .HasColumnName("id_especialidade");
+
+                    b.HasKey("ProfissionalId", "EspecialidadeId");
+
+                    b.HasIndex("EspecialidadeId");
+
+                    b.ToTable("tb_profissional_especialidade", (string)null);
+                });
+
             modelBuilder.Entity("Consultorio.Models.Entities.Consulta", b =>
                 {
+                    b.HasOne("Consultorio.Models.Entities.Especialidade", "Especialidade")
+                        .WithMany("Consultas")
+                        .HasForeignKey("EspecialidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Consultorio.Models.Entities.Paciente", "Paciente")
                         .WithMany("Consultas")
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Consultorio.Models.Entities.Profissional", "Profissional")
+                        .WithMany("Consultas")
+                        .HasForeignKey("ProfissionalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidade");
+
                     b.Navigation("Paciente");
+
+                    b.Navigation("Profissional");
+                });
+
+            modelBuilder.Entity("Consultorio.Models.Entities.ProfissionalEspecialidade", b =>
+                {
+                    b.HasOne("Consultorio.Models.Entities.Especialidade", "Especialidade")
+                        .WithMany()
+                        .HasForeignKey("EspecialidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Consultorio.Models.Entities.Profissional", "Profissional")
+                        .WithMany()
+                        .HasForeignKey("ProfissionalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Especialidade");
+
+                    b.Navigation("Profissional");
+                });
+
+            modelBuilder.Entity("Consultorio.Models.Entities.Especialidade", b =>
+                {
+                    b.Navigation("Consultas");
                 });
 
             modelBuilder.Entity("Consultorio.Models.Entities.Paciente", b =>
+                {
+                    b.Navigation("Consultas");
+                });
+
+            modelBuilder.Entity("Consultorio.Models.Entities.Profissional", b =>
                 {
                     b.Navigation("Consultas");
                 });
