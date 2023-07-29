@@ -25,7 +25,7 @@ namespace Consultorio.Maps
                      {
                          x.ToTable("tb_profissional_especialidade");
 
-                         x.HasKey(p => new { p.ProfissionalId,p.EspecialidadeId  });
+                         x.HasKey(p => new { p.ProfissionalId, p.EspecialidadeId });
 
                          x.Property(p => p.EspecialidadeId).HasColumnName("id_especialidade").IsRequired();
                          x.Property(p => p.ProfissionalId).HasColumnName("id_profissional").IsRequired();

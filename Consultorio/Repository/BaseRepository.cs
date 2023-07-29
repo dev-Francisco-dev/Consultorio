@@ -12,7 +12,7 @@ namespace Consultorio.Repository
         }
         public void Add<T>(T Entity) where T : class
         {
-            throw new NotImplementedException();
+            _db.Add(Entity);
         }
 
         public void Delete<T>(T Entity) where T : class
@@ -20,14 +20,14 @@ namespace Consultorio.Repository
             throw new NotImplementedException();
         }
 
-        public bool Savechanges()
+        public async Task<bool> SavechangesAsync()
         {
-            throw new NotImplementedException();
+            return await _db.SaveChangesAsync() > 0;
         }
 
         public void Update<T>(T Entity) where T : class
         {
-            throw new NotImplementedException();
+            _db.Update(Entity);
         }
     }
 }

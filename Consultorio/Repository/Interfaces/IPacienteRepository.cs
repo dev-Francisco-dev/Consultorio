@@ -1,4 +1,5 @@
-﻿using Consultorio.Models.Entities;
+﻿using Consultorio.Models.Dtos;
+using Consultorio.Models.Entities;
 
 namespace Consultorio.Repository.Interfaces
 {

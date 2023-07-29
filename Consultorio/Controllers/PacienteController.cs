@@ -23,7 +23,6 @@ namespace Consultorio.Controllers
         public async Task<IActionResult> Get()
         {
             var pacientes = await _repository.GetAsync();
-
             var pacienteRetorno = _mapper.Map<IEnumerable<PacienteDetailsDto>>(pacientes);
 
             return pacienteRetorno != null
@@ -33,25 +32,36 @@ namespace Consultorio.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var paciente = await _repository.GetByIdAsync(id);
-
-            var pacienteRetorno = new PacienteDetailsDto
-            {
-                Id = paciente.Id,
-                Nome = paciente.Nome,
-                Email = paciente.Email,
-                Celular = paciente.Celular,
-                Cpf = paciente.Cpf,
-            };
+            var pacientes = await _repository.GetByIdAsync(id);
+            var pacienteRetorno = _mapper.Map<PacienteDetailsDto>(pacientes);
 
             return pacienteRetorno != null
            ? Ok(pacienteRetorno)
            : BadRequest("Paciente Não encontrado!");
         }
+        [HttpPost]
+        public async Task<IActionResult> Post(PacienteAdicionarDto paciente)
+        {
+            if (paciente == null) return BadRequest("Dados Invalidos");
+            var pacienteRetornoAdicionar = _mapper.Map<Paciente>(paciente);
+            _repository.Add(pacienteRetornoAdicionar);
 
+            return await _repository.SavechangesAsync()
+                ? Ok("Paciente adicionado com sucesso!")
+                : BadRequest("Erro ao adicionar paciente");
+        }
+        [HttpPut("id")]
+        public async Task<IActionResult> Put(int id,PacienteAtualizarDto paciente )
+        {
+            if (id <= 0) return BadRequest("Usuario não informado!");
+            var pacientebanco = await _repository.GetByIdAsync(id);
+            var pacienteAtualizar = _mapper.Map(paciente, pacientebanco);
+            _repository.Update(pacienteAtualizar);
+            return await _repository.SavechangesAsync()
+                ? Ok("Paciente atualizado com sucesso") 
+                : BadRequest("Erro ao atualizar Paciente");
+        }
 
     }
-
-
 }
 
