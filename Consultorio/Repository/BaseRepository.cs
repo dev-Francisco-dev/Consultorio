@@ -17,7 +17,7 @@ namespace Consultorio.Repository
 
         public void Delete<T>(T Entity) where T : class
         {
-            throw new NotImplementedException();
+            _db.Remove(Entity);
         }
 
         public async Task<bool> SavechangesAsync()

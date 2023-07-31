@@ -33,8 +33,8 @@ namespace Consultorio.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     email = table.Column<string>(type: "varchar(50)", nullable: false),
-                    celular = table.Column<string>(type: "varchar(100)", nullable: false),
-                    cpf = table.Column<string>(type: "varchar(11)", nullable: false)
+                    celular = table.Column<string>(type: "varchar(100)", nullable: true),
+                    cpf = table.Column<string>(type: "varchar(11)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -61,6 +61,20 @@ namespace Consultorio.Controllers
                 ? Ok("Paciente atualizado com sucesso") 
                 : BadRequest("Erro ao atualizar Paciente");
         }
+        [HttpDelete("id")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest("Paciente invalido");
+            var pacienteExcluir = await _repository.GetByIdAsync(id);
+            if (pacienteExcluir == null) return NotFound("Paciente não encontrado");
+            _repository.Delete(pacienteExcluir);
+
+            return await _repository.SavechangesAsync()
+                ? Ok("Paciente deletado com sucesso")
+                : BadRequest("Erro ao deletar Paciente");
+
+
+        }
 
     }
 }
