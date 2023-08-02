@@ -32,7 +32,5 @@ namespace Consultorio.Repository
                         .FirstOrDefaultAsync(); 
             return paciente!;
         }
-
-
     }
 }

@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddScoped<IBaseRepository, BaseRepository>();
+builder.Services.AddScoped<IProfissionalRepository, ProfissionalRepository>();
 builder.Services.AddDbContext<ConsultorioContext>(
         options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConsultorioDbContext"),
         assembly => assembly.MigrationsAssembly(typeof(ConsultorioContext).Assembly.FullName)));

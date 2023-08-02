@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Consultorio.Controllers
 {
     [ApiController]
-    [Route("api/Controller")]
+    [Route("api/Controller/Paciente")]
     public class PacienteController : ControllerBase
     {
         private readonly IPacienteRepository _repository;
@@ -29,8 +29,9 @@ namespace Consultorio.Controllers
                 ? Ok(pacienteRetorno)
                 : BadRequest("Paciente Não encontrado!");
         }
+
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             var pacientes = await _repository.GetByIdAsync(id);
             var pacienteRetorno = _mapper.Map<PacienteDetailsDto>(pacientes);
@@ -39,6 +40,7 @@ namespace Consultorio.Controllers
            ? Ok(pacienteRetorno)
            : BadRequest("Paciente Não encontrado!");
         }
+
         [HttpPost]
         public async Task<IActionResult> Post(PacienteAdicionarDto paciente)
         {
@@ -50,6 +52,7 @@ namespace Consultorio.Controllers
                 ? Ok("Paciente adicionado com sucesso!")
                 : BadRequest("Erro ao adicionar paciente");
         }
+
         [HttpPut("id")]
         public async Task<IActionResult> Put(int id,PacienteAtualizarDto paciente )
         {
@@ -61,6 +64,7 @@ namespace Consultorio.Controllers
                 ? Ok("Paciente atualizado com sucesso") 
                 : BadRequest("Erro ao atualizar Paciente");
         }
+
         [HttpDelete("id")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -72,10 +76,7 @@ namespace Consultorio.Controllers
             return await _repository.SavechangesAsync()
                 ? Ok("Paciente deletado com sucesso")
                 : BadRequest("Erro ao deletar Paciente");
-
-
         }
-
     }
 }
 
