@@ -1,0 +1,36 @@
+﻿INSERT INTO tb_paciente (Nome, Email, Telefone)
+VALUES
+    ('Maria Silva', 'maria.silva@example.com', '+1 (555) 123-4567'),
+    ('João Oliveira', 'joao.oliveira@example.com', '+44 20 7123 4567'),
+    ('Ana Rodrigues', 'ana.rodrigues@example.com', '+33 1 23 45 67 89'),
+    ('Pedro Almeida', 'pedro.almeida@example.com', '+49 30 12345678'),
+    ('Sofia Pereira', 'sofia.pereira@example.com', '+81 3 1234 5678'),
+    ('Carlos Santos', 'carlos.santos@example.com', '+61 2 1234 5678'),
+    ('Inês Ferreira', 'ines.ferreira@example.com', '+39 02 1234 5678'),
+    ('Diogo Costa', 'diogo.costa@example.com', '+34 91 234 56 78'),
+    ('Beatriz Martins', 'beatriz.martins@example.com', '+86 10 1234 5678'),
+    ('André Sousa', 'andre.sousa@example.com', '+55 11 1234 5678'),
+    ('Luísa Gomes', 'luisa.gomes@example.com', '+972 3 123 4567'),
+    ('Tiago Fernandes', 'tiago.fernandes@example.com', '+91 11 1234 5678'),
+    ('Rita Pereira', 'rita.pereira@example.com', '+65 6123 4567'),
+    ('Miguel Rodrigues', 'miguel.rodrigues@example.com', '+7 495 123-45-67'),
+    ('Carolina Lima', 'carolina.lima@example.com', '+82 2 1234 5678'),
+    ('Francisco Cardoso', 'francisco.cardoso@example.com', '+351 21 123 4567'),
+    ('Catarina Marques', 'catarina.marques@example.com', '+46 8 123 456 78'),
+    ('Guilherme Barbosa', 'guilherme.barbosa@example.com', '+61 8 1234 5678'),
+    ('Marta Teixeira', 'marta.teixeira@example.com', '+45 12 34 56 78'),
+    ('Rafael Pinto', 'rafael.pinto@example.com', '+358 9 1234567'),
+    ('Mariana Neves', 'mariana.neves@example.com', '+1 (555) 234-5678'),
+    ('Alexandre Alves', 'alexandre.alves@example.com', '+44 20 7654 3210'),
+    ('Vitória Ribeiro', 'vitoria.ribeiro@example.com', '+33 1 67 89 23 45'),
+    ('Tomás Carvalho', 'tomas.carvalho@example.com', '+49 30 98765432'),
+    ('Alice Cunha', 'alice.cunha@example.com', '+81 3 5678 1234'),
+    ('Bernardo Santos', 'bernardo.santos@example.com', '+61 2 8765 4321'),
+    ('Leonor Ferreira', 'leonor.ferreira@example.com', '+39 02 5678 1234'),
+    ('Gabriel Silva', 'gabriel.silva@example.com', '+34 91 678 23 45'),
+    ('Laura Oliveira', 'laura.oliveira@example.com', '+86 10 5678 1234'),
+    ('David Martins', 'david.martins@example.com', '+55 11 8765 4321'),
+    
+
+-- Mensagem de conclusão
+PRINT 'Dados fictícios inseridos na tabela tb_paciente.';

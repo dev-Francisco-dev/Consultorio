@@ -17,12 +17,19 @@ namespace Consultorio.Repository
        
         public async Task<IEnumerable<Profissional>> GetAsync()
         {
-            return await _db.Profissionais.ToListAsync();
+            return await _db.Profissionais
+                .Include(x => x.Especialidades)
+                .Include(x => x.Consultas)
+                .ToListAsync();
         }
 
         public async Task<Profissional> GetByIdAsync(int id)
         {
-            var profissional = await _db.Profissionais.FirstOrDefaultAsync(x => x.Id == id);
+            var profissional = await _db.Profissionais
+                .Include(x => x.Especialidades)
+                .Include(x => x.Consultas)
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
             return profissional!;
         }
     }
