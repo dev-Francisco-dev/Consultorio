@@ -77,6 +77,7 @@ namespace Consultorio.Controllers
                 ? Ok("Paciente deletado com sucesso")
                 : BadRequest("Erro ao deletar Paciente");
         }
+             
     }
 }
 

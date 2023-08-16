@@ -39,8 +39,46 @@ namespace Consultorio.Controllers
                 ? Ok(profissionalRetorno)
                 : BadRequest("Profissional não encontrado");
         }
-      
-        
+
+        [HttpPost]
+        public async Task<IActionResult> Post(ProfissionalAdicionarDto profissionalAdicionarDto)
+        {
+            if (profissionalAdicionarDto == null) return BadRequest("Dados Invalidos");
+            var profissionalAdicionar = _mapper.Map<Profissional>(profissionalAdicionarDto);
+            _repository.Add(profissionalAdicionar);
+
+            return await _repository.SavechangesAsync()
+                ? Ok("Profissional adicionado com sucesso!")
+                : BadRequest("Erro ao adicionar profissional");
+
+        }
+
+        [HttpPut("id")]
+        public async Task<IActionResult> Put(int id, ProfissionalAtualizarDto profissional)
+        {
+            if (id <= 0) return BadRequest("Profissional não informado!");
+            var profissionalbanco = await _repository.GetByIdAsync(id);
+            var profissionalAtualizar = _mapper.Map(profissional, profissionalbanco);
+            _repository.Update(profissionalAtualizar);
+            return await _repository.SavechangesAsync()
+                ? Ok("profissional atualizado com sucesso")
+                : BadRequest("Erro ao atualizar Profissional");
+        }
+
+        [HttpDelete("id")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (id <= 0) return BadRequest("Profssional invalido");
+            var profissionalExcluir = await _repository.GetByIdAsync(id);
+            if (profissionalExcluir == null) return NotFound("Profissional não encontrado");
+            _repository.Delete(profissionalExcluir);
+
+            return await _repository.SavechangesAsync()
+                ? Ok("Profissional deletado com sucesso")
+                : BadRequest("Erro ao deletar Profissional");
+        }
+
+
     }
 }
 
